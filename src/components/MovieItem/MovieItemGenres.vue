@@ -1,7 +1,9 @@
 <script setup>
-const { movieGenres } = defineProps({
-  movieGenres: Array,
-});
+import { inject } from "vue";
+
+const { movieList } = inject("MovieListContext");
+const { movieIndex } = inject("MovieItemContext");
+const { genres: movieGenres } = movieList.value[movieIndex];
 </script>
 <template>
   <div className="flex gap-2 mb-3">

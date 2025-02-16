@@ -1,11 +1,12 @@
 <script setup>
-const { movieName } = defineProps({
-  movieName: String,
-});
+import { inject } from "vue";
+
+const { movieList } = inject("MovieListContext");
+const { movieIndex } = inject("MovieItemContext");
+
+const { name: movieName } = movieList.value[movieIndex];
 </script>
 
 <template>
-  <div className="text-xl font-bold whitespace-nowrap">
-    {{ movieName }}
-  </div>
+  <div className="text-xl font-bold whitespace-nowrap">{{ movieName }}</div>
 </template>

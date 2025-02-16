@@ -1,7 +1,9 @@
 <script setup>
-const { movieImage } = defineProps({
-  movieImage: String,
-});
+import { inject } from "vue";
+
+const { movieList } = inject("MovieListContext");
+const { movieIndex } = inject("MovieItemContext");
+const { image: movieImage } = movieList.value[movieIndex];
 </script>
 
 <template>
