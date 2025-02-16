@@ -7,7 +7,11 @@ const movieList = ref(items);
 </script>
 
 <template>
-  <div v-for="movie in movieList" :key="movie.id">
-    <MovieItem :movie-data="movie" />
+  <div class="flex justify-center">
+    <div className="flex flex-wrap gap-4 mx-5">
+      <div v-for="movie in movieList" :key="movie.id">
+        <MovieItem :movie-data="movie" />
+      </div>
+    </div>
   </div>
 </template>
