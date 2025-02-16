@@ -8,7 +8,7 @@ const movieList = ref(items);
 
 <template>
   <div class="flex justify-center">
-    <div className="flex flex-wrap gap-4 mx-5">
+    <div className="flex flex-wrap gap-4">
       <div v-for="movie in movieList" :key="movie.id">
         <MovieItem :movie-data="movie" />
       </div>

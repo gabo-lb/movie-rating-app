@@ -3,6 +3,7 @@ import MovieList from "../components/MovieList/MovieList.vue";
 </script>
 
 <template>
-  Movies
-  <MovieList />
+  <div className="m-8">
+    <MovieList />
+  </div>
 </template>
