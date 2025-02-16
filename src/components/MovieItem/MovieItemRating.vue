@@ -1,6 +1,6 @@
 <script setup>
-import { StarIcon } from "@heroicons/vue/24/solid";
 import { inject, ref, watchEffect } from "vue";
+import MovieItemRatingStar from "./MovieItemRatingStar.vue";
 
 const { movieList, updateMovieList } = inject("MovieListContext");
 const { movieIndex } = inject("MovieItemContext");
@@ -22,16 +22,12 @@ watchEffect(() => {
   <div className="absolute bottom-3 text-sm">
     <div className="flex">
       <div className="w-[90px]">Rating: ({{ movieRating }}/5)</div>
-      <div v-for="star in 5" :key="star">
-        <button
-          @click="updateRating(star)"
-          :class="[
-            'size-5',
-            { 'text-yellow-500': star <= movieRating },
-            { 'text-gray-300': star > movieRating },
-          ]"
-        >
-          <StarIcon />
+      <div v-for="star in 5" :key="star" class="flex items-center">
+        <button @click="updateRating(star)">
+          <MovieItemRatingStar
+            :star-size="1.3"
+            :is-filled-star="star <= movieRating"
+          />
         </button>
       </div>
     </div>
