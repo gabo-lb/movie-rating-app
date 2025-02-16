@@ -1,15 +1,8 @@
 <script setup>
-import { ref, provide } from "vue";
-import { items } from "../../movies.json";
+import { inject } from "vue";
 import MovieItem from "../MovieItem/MovieItem.vue";
 
-const movieList = ref(items);
-
-const updateMovieList = ({ movieIndex, newMovieValue, movieKeyValue }) => {
-  movieList.value[movieIndex][movieKeyValue] = newMovieValue;
-};
-
-provide("MovieListContext", { movieList, updateMovieList });
+const { movieList } = inject("MoviesViewtContext");
 </script>
 
 <template>

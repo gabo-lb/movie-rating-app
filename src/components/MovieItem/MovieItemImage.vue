@@ -2,7 +2,7 @@
 import { inject } from "vue";
 import MovieItemRatingStar from "./MovieItemRatingStar.vue";
 
-const { movieList } = inject("MovieListContext");
+const { movieList } = inject("MoviesViewtContext");
 const { movieIndex } = inject("MovieItemContext");
 const { image: movieImage } = movieList.value[movieIndex];
 </script>

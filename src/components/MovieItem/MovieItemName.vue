@@ -1,7 +1,7 @@
 <script setup>
 import { inject } from "vue";
 
-const { movieList } = inject("MovieListContext");
+const { movieList } = inject("MoviesViewtContext");
 const { movieIndex } = inject("MovieItemContext");
 
 const { name: movieName } = movieList.value[movieIndex];

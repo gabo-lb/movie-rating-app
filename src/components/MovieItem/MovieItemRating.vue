@@ -2,7 +2,7 @@
 import { inject, ref, watchEffect } from "vue";
 import MovieItemRatingStar from "./MovieItemRatingStar.vue";
 
-const { movieList, updateMovieList } = inject("MovieListContext");
+const { movieList, updateMovieList } = inject("MoviesViewtContext");
 const { movieIndex } = inject("MovieItemContext");
 const movieRating = ref();
 
