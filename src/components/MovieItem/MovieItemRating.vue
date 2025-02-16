@@ -21,7 +21,7 @@ watchEffect(() => {
 <template>
   <div className="absolute bottom-3 text-sm">
     <div className="flex">
-      <div className="mr-2">Rating: ({{ movieRating }}/5)</div>
+      <div className="w-[90px]">Rating: ({{ movieRating }}/5)</div>
       <div v-for="star in 5" :key="star">
         <button
           @click="updateRating(star)"
