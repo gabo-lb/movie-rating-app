@@ -13,7 +13,7 @@ const { movieIndex } = inject("MovieItemContext");
 const movieRating = ref();
 
 watchEffect(() => {
-  movieRating.value = movieList.value[movieIndex].rating;
+  movieRating.value = movieList.value[movieIndex].rating || "-";
 });
 </script>
 <template>
@@ -21,7 +21,7 @@ watchEffect(() => {
     <StarIcon
       :class="[
         { 'text-yellow-500': isFilledStar },
-        { 'text-gray-300': !isFilledStar },
+        { 'text-gray-500': !isFilledStar },
       ]"
       :style="{ width: `${starSize}rem` }"
     />

@@ -15,7 +15,7 @@ const updateRating = (newRating) => {
 };
 
 watchEffect(() => {
-  movieRating.value = movieList.value[movieIndex].rating;
+  movieRating.value = movieList.value[movieIndex].rating || "-";
 });
 </script>
 <template>
