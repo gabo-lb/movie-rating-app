@@ -28,7 +28,7 @@ provide("MovieModalContext", { handleCloseModal, handleOpenModal });
     <BaseButton
       @click.stop="handleOpenModal"
       label="Add movie"
-      class="absolute right-40 top-2 z-10"
+      :class="[{ 'duration-75 ease-in-out blur-sm': isModalOpen }]"
     />
     <div
       v-if="isModalOpen"
