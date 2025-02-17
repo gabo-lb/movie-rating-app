@@ -25,29 +25,27 @@ const handleInputChange = (event) => {
       },
     ]"
   >
-    <div>
-      <div class="flex items-center">
-        <div class="mr-2">{{ fieldName }}</div>
-        <div
-          v-if="hasError"
-          class="text-red-700 font-bold text-sm flex justify-end w-full"
-        >
-          *field is required
-        </div>
+    <div class="flex items-center">
+      <div class="mr-2">{{ fieldName }}</div>
+      <div
+        v-if="hasError"
+        class="text-red-700 font-bold text-sm flex justify-end w-full"
+      >
+        *field is required
       </div>
-      <textarea
-        v-if="fieldType === 'textarea'"
-        class="w-full"
-        :value="modelValue"
-        @input="handleInputChange"
-      />
-      <input
-        v-else
-        :type="fieldType"
-        class="w-full"
-        :value="modelValue"
-        @input="handleInputChange"
-      />
     </div>
+    <textarea
+      v-if="fieldType === 'textarea'"
+      class="w-full"
+      :value="modelValue"
+      @input="handleInputChange"
+    />
+    <input
+      v-else
+      :type="fieldType"
+      class="w-full"
+      :value="modelValue"
+      @input="handleInputChange"
+    />
   </div>
 </template>
