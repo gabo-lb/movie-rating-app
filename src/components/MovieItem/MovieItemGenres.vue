@@ -1,9 +1,14 @@
 <script setup>
-import { inject } from "vue";
+import { inject, ref, watchEffect } from "vue";
 
-const { movieList } = inject("MoviesViewtContext");
+const { movieList } = inject("MoviesViewContext");
 const { movieIndex } = inject("MovieItemContext");
-const { genres: movieGenres } = movieList.value[movieIndex];
+const movieGenres = ref([]);
+
+watchEffect(() => {
+  const { genres } = movieList.value[movieIndex] ?? {};
+  movieGenres.value = genres || "";
+});
 </script>
 <template>
   <div className="flex gap-2 mb-3">

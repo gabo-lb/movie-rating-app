@@ -1,9 +1,15 @@
 <script setup>
-import { inject } from "vue";
+import { inject, ref, watchEffect } from "vue";
 
-const { movieList } = inject("MoviesViewtContext");
+const { movieList } = inject("MoviesViewContext");
 const { movieIndex } = inject("MovieItemContext");
-const { description: movieDescription } = movieList.value[movieIndex];
+
+const movieDescription = ref("");
+
+watchEffect(() => {
+  const { description } = movieList.value[movieIndex] ?? {};
+  movieDescription.value = description || "";
+});
 </script>
 <template>
   <div className="text-sm">{{ movieDescription }}</div>

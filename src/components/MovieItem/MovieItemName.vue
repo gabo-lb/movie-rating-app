@@ -1,10 +1,15 @@
 <script setup>
-import { inject } from "vue";
+import { inject, ref, watchEffect } from "vue";
 
-const { movieList } = inject("MoviesViewtContext");
+const { movieList } = inject("MoviesViewContext");
 const { movieIndex } = inject("MovieItemContext");
 
-const { name: movieName } = movieList.value[movieIndex];
+const movieName = ref("");
+
+watchEffect(() => {
+  const { name } = movieList?.value[movieIndex] ?? {};
+  movieName.value = name || "";
+});
 </script>
 
 <template>

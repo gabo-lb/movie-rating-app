@@ -7,7 +7,7 @@ const { isFilledStar, starSize } = defineProps({
   isShowInnerRateNumber: { type: Boolean, default: false },
   starSize: { type: Number, default: 1 },
 });
-const { movieList } = inject("MoviesViewtContext");
+const { movieList } = inject("MoviesViewContext");
 const { movieIndex } = inject("MovieItemContext");
 
 const movieRating = ref();

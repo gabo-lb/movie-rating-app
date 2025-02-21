@@ -1,10 +1,16 @@
 <script setup>
-import { inject } from "vue";
+import { inject, ref, watchEffect } from "vue";
 import MovieItemRatingStar from "./MovieItemRatingStar.vue";
 
-const { movieList } = inject("MoviesViewtContext");
+const { movieList } = inject("MoviesViewContext");
 const { movieIndex } = inject("MovieItemContext");
-const { image: movieImage } = movieList.value[movieIndex];
+
+const movieImage = ref();
+
+watchEffect(() => {
+  const { image } = movieList.value[movieIndex] ?? {};
+  movieImage.value = image || "";
+});
 </script>
 
 <template>

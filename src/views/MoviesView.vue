@@ -1,8 +1,12 @@
 <script setup>
+//External imports
 import { computed, provide, ref } from "vue";
+//Local imports
 import { items } from "../mockData/movies.json";
 import MovieList from "../components/MovieList/MovieList.vue";
 import MovieModal from "../components/MovieModal/MovieModal.vue";
+import TheMoviesViewHeader from "../components/TheMoviesViewHeader/TheMoviesViewHeader.vue";
+import TheMoviesViewEditModal from "../components/TheMoviesViewHeader/TheMoviesViewEditModal.vue";
 
 const movieList = ref(items);
 const isBgBlured = ref(false);
@@ -12,44 +16,42 @@ const addNewMovie = ({ movieData }) => {
 };
 
 const updateMovieList = ({ movieIndex, newMovieValue, movieKeyValue }) => {
-  movieList.value[movieIndex][movieKeyValue] = newMovieValue;
+  if (movieKeyValue) {
+    movieList.value[movieIndex][movieKeyValue] = newMovieValue;
+    return;
+  }
+  movieList.value[movieIndex] = newMovieValue;
+};
+
+const deleteMovie = ({ movieIndex }) => {
+  movieList.value.splice(movieIndex, 1);
 };
 
 const handleIsBgBlured = (isBlured) => {
   isBgBlured.value = isBlured;
 };
 
-const averageRating = computed(() => {
-  let ratingSum = 0;
-  movieList.value.forEach(({ rating: movieRating }) => {
-    ratingSum += movieRating;
-  });
-  const averageRating = ratingSum / movieList.value.length;
-  return averageRating.toFixed(1);
-});
+const blurStyle = computed(() =>
+  isBgBlured.value ? "duration-75 ease-in-out blur-sm" : "",
+);
 
-provide("MoviesViewtContext", {
+provide("MoviesViewContext", {
   movieList,
   updateMovieList,
   handleIsBgBlured,
   addNewMovie,
+  deleteMovie,
+  blurStyle,
 });
-
-const blurStyle = computed(() =>
-  isBgBlured.value ? "duration-75 ease-in-out blur-sm" : "",
-);
 </script>
 
 <template>
-  <div
-    class="flex flex-nowrap mx-10 my-4 justify-between text-2xl text-slate-200"
-  >
-    <div :class="['flex flex-nowrap', blurStyle]">
-      <div class="mr-6">Total movies: {{ movieList.length }}</div>
-      <div class="mr-6">/</div>
-      <div>Average rating: {{ averageRating }}</div>
+  <div :class="['flex flex-col']">
+    <div class="flex flex-nowrap mx-[170px] my-6 justify-between text-2xl">
+      <TheMoviesViewHeader />
     </div>
-    <MovieModal />
+    <TheMoviesViewEditModal>
+      <MovieList :class="blurStyle" />
+    </TheMoviesViewEditModal>
   </div>
-  <MovieList :class="blurStyle" />
 </template>

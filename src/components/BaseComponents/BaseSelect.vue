@@ -18,7 +18,7 @@ const selectedOption = computed({
 });
 </script>
 <template>
-  <div>
+  <div class="text-sm">
     <div>{{ fieldName }}</div>
     <div>
       <select v-model="selectedOption" class="w-full" multiple>

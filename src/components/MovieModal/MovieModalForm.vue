@@ -1,14 +1,20 @@
 <script setup>
-import { computed, inject, ref } from "vue";
+import { computed, inject, ref, watchEffect } from "vue";
 import BaseInput from "../BaseComponents/BaseInput.vue";
 import BaseSelect from "../BaseComponents/BaseSelect.vue";
 import BaseCancelAndSaveButtons from "../BaseComponents/BaseCancelAndSaveButtons.vue";
 import { genres as movieGenres } from "../../mockData/genres.json";
 
-const { addNewMovie } = inject("MoviesViewtContext");
-const { handleCloseModal } = inject("MovieModalContext");
+const props = defineProps({
+  initData: { type: Object, default: null },
+});
+
+const { addNewMovie } = inject("MoviesViewContext");
+const { handleCloseModal, handleSaveModal } = inject("MovieModalContext");
 
 const requiredFields = ref(["name"]);
+
+const isEditMode = ref(Boolean(props.initData));
 
 const movieData = ref({
   name: { hasError: false, value: "" },
@@ -23,13 +29,14 @@ const handleOnCancel = () => {
 };
 
 const getParsedMovieData = ({ dataToParse }) => {
-  const { name, description, image, genres, inTheaters } = dataToParse;
+  const { name, description, image, genres, inTheaters, rating } = dataToParse;
   return {
     name: name.value,
     description: description.value,
     image: image.value,
     genres: genres.value,
     inTheaters: inTheaters.value,
+    rating: rating?.value || "-",
   };
 };
 
@@ -44,13 +51,30 @@ const isSaveDisabled = computed(() => {
 });
 
 const handleOnSave = () => {
-  const parsedMovieData = getParsedMovieData({ dataToParse: movieData.value });
-
   if (!isSaveDisabled.value) {
-    addNewMovie({ movieData: parsedMovieData });
+    const parsedMovieData = getParsedMovieData({
+      dataToParse: movieData.value,
+    });
+    if (!isEditMode.value) {
+      addNewMovie({ movieData: parsedMovieData });
+    }
+    handleSaveModal?.({ editedMovieData: parsedMovieData });
     handleCloseModal();
   }
 };
+
+watchEffect(() => {
+  if (props.initData) {
+    let parsedInitData = {};
+    Object.entries(props.initData).forEach(([fieldKey, fieldValue]) => {
+      parsedInitData = {
+        ...parsedInitData,
+        [fieldKey]: { hasError: false, value: fieldValue },
+      };
+    });
+    movieData.value = parsedInitData;
+  }
+});
 </script>
 <template>
   <div class="flex flex-col justify-between h-full p-4">
