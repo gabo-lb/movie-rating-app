@@ -1,5 +1,6 @@
 <script setup>
-import { items } from "./movies.json";
+// import { items } from "./movies.json";
+import MoviesView from "./views/MoviesView.vue";
 /*
  This is an Icon that you can use to represent the stars if you like
  otherwise you could just use a simple ⭐️ emoji, or * character.
@@ -9,5 +10,5 @@ import { items } from "./movies.json";
 
 <template>
   <!-- This is where your template goes	-->
-  <div></div>
+  <MoviesView />
 </template>

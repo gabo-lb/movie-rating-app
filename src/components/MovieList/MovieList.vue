@@ -1,0 +1,18 @@
+<script setup>
+import { inject, watchEffect } from "vue";
+import MovieItem from "../MovieItem/MovieItem.vue";
+
+const { movieList } = inject("MoviesViewContext");
+
+watchEffect(() => movieList.value);
+</script>
+
+<template>
+  <div class="flex justify-center mx-6 min-w-96">
+    <div className="flex flex-wrap gap-4">
+      <div v-for="(movie, movieIndex) in movieList" :key="movie.id">
+        <MovieItem :key="movieIndex" :movie-index="movieIndex" />
+      </div>
+    </div>
+  </div>
+</template>
