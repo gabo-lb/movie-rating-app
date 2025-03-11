@@ -1,10 +1,14 @@
 <script setup>
+import { ref } from "vue";
+
 const { hasError, fieldName, fieldType, modelValue } = defineProps({
   hasError: Boolean,
   fieldName: String,
   fieldType: { type: String, default: "text" },
   modelValue: [String, Boolean],
 });
+
+const isInputFocused = ref(false);
 
 const emit = defineEmits(["update:modelValue"]);
 
@@ -17,35 +21,45 @@ const handleInputChange = (event) => {
 };
 </script>
 <template>
-  <div
-    :class="[
-      {
-        'flex whitespace-nowrap size-4 items-center gap-2':
-          fieldType === 'checkbox',
-      },
-    ]"
-  >
-    <div class="flex items-center text-sm">
-      <div class="mr-2">{{ fieldName }}</div>
-      <div
-        v-if="hasError"
-        class="text-red-700 font-bold flex justify-end w-full"
-      >
-        *field is required
-      </div>
-    </div>
+  <div v-if="fieldType === 'checkbox'" class="flex space-x-2">
+    <input :type="fieldType" :value="modelValue" @input="handleInputChange" />
+    <label class="text-sm">{{ fieldName }}</label>
+  </div>
+  <div v-if="fieldType === 'textarea'" class="relative bg-inherit">
+    {{ isResizing }}
     <textarea
-      v-if="fieldType === 'textarea'"
-      class="w-full text-sm px-1"
+      class="base-input-border-styles w-full text-sm min-h-8 max-h-24 bg-transparent outline-none pt-2 pl-2"
       :value="modelValue"
       @input="handleInputChange"
+      @focus="isInputFocused = true"
+      @blur="isInputFocused = false"
     />
+    <label
+      :class="[
+        'base-input-label-styles h-fit flex mt-2',
+        modelValue || isInputFocused ? 'left-0 -top-5' : 'inset-0',
+      ]"
+    >
+      {{ fieldName }}
+      <div v-if="!modelValue && !isInputFocused">...</div>
+    </label>
+  </div>
+  <div class="relative bg-inherit" v-if="fieldType === 'text'">
     <input
-      v-else
+      class="base-input-border-styles w-full h-10 outline-none pl-2 text-sm bg-transparent"
       :type="fieldType"
-      class="w-full h-8 text-sm px-1"
       :value="modelValue"
       @input="handleInputChange"
+      @focus="isInputFocused = true"
+      @blur="isInputFocused = false"
     />
+    <label
+      :class="[
+        'base-input-label-styles self-center',
+        modelValue || isInputFocused ? 'left-0 -top-3' : 'inset-0',
+      ]"
+    >
+      {{ fieldName }}
+    </label>
   </div>
 </template>

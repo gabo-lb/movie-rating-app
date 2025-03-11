@@ -77,29 +77,31 @@ watchEffect(() => {
 });
 </script>
 <template>
-  <div class="flex flex-col justify-between h-full p-4">
-    <BaseInput
-      v-model.trim="movieData.name.value"
-      field-name="Name"
-      :has-error="movieData.name.hasError"
-    />
-    <BaseInput
-      v-model.trim="movieData.description.value"
-      field-type="textarea"
-      field-name="Description"
-    />
-    <BaseInput v-model.trim="movieData.image.value" field-name="Image" />
-    <BaseSelect
-      field-name="Genres"
-      v-model="movieData.genres.value"
-      :option-list="movieGenres"
-    />
-    <BaseInput
-      v-model="movieData.inTheaters.value"
-      field-name="In Theaters"
-      field-type="checkbox"
-    />
-    <div class="flex justify-end w-full">
+  <div class="grid w-[34rem] h-[30rem] bg-slate-200 shadow-2xl p-6">
+    <div class="space-y-6 bg-inherit">
+      <BaseInput
+        v-model="movieData.name.value"
+        field-name="Name"
+        :has-error="movieData.name.hasError"
+      />
+      <BaseInput
+        v-model="movieData.description.value"
+        field-type="textarea"
+        field-name="Description"
+      />
+      <BaseInput v-model="movieData.image.value" field-name="Image" />
+      <BaseSelect
+        field-name="Genres"
+        v-model="movieData.genres.value"
+        :option-list="movieGenres"
+      />
+      <BaseInput
+        v-model="movieData.inTheaters.value"
+        field-name="In Theaters"
+        field-type="checkbox"
+      />
+    </div>
+    <div class="place-content-end place-self-end">
       <BaseCancelAndSaveButtons
         :handle-on-cancel="handleOnCancel"
         :handle-on-save="handleOnSave"

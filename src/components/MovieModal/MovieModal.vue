@@ -61,9 +61,7 @@ provide("MovieModalContext", {
       role="dialog"
       class="fixed inset-0 flex items-center justify-center"
     >
-      <div class="w-[34rem] h-[30rem] bg-slate-600 inset-0 shadow-2xl">
-        <MovieModalForm :init-data="initData" />
-      </div>
+      <MovieModalForm :init-data="initData" />
     </div>
   </div>
 </template>

@@ -1,3 +1,10 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.base-input-border-styles {
+  @apply rounded-lg ring-blue-500 ring-1 shadow-md shadow-gray-500 focus:ring-2 focus:shadow-lg focus:shadow-gray-500 transition-all duration-200;
+}
+.base-input-label-styles {
+  @apply absolute w-fit text-sm bg-inherit text-slate-500 pointer-events-none ml-2 transition-all duration-200;
+}

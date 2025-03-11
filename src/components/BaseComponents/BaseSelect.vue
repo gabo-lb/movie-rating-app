@@ -18,14 +18,18 @@ const selectedOption = computed({
 });
 </script>
 <template>
-  <div class="text-sm">
-    <div>{{ fieldName }}</div>
-    <div>
-      <select v-model="selectedOption" class="w-full" multiple>
-        <option v-for="option in optionList" :key="option">
-          {{ option }}
-        </option>
-      </select>
+  <div class="relative text-sm bg-inherit">
+    <div class="base-input-label-styles h-4 absolute -top-3">
+      {{ fieldName }}
     </div>
+    <select
+      v-model="selectedOption"
+      class="base-input-border-styles w-full bg-transparent outline-none"
+      multiple
+    >
+      <option v-for="option in optionList" :key="option" class="p-1">
+        {{ option }}
+      </option>
+    </select>
   </div>
 </template>
