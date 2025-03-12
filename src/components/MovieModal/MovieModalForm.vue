@@ -13,11 +13,7 @@ const movieData = ref(props.modelValue);
 <template>
   <div class="grid w-[34rem] bg-slate-200 shadow-2xl p-6">
     <div class="space-y-6 bg-inherit">
-      <BaseInput
-        v-model="movieData.name.value"
-        field-name="Name"
-        :has-error="movieData.name.hasError"
-      />
+      <BaseInput v-model="movieData.name.value" field-name="Name" auto-focus />
       <BaseInput
         v-model="movieData.description.value"
         field-type="textarea"
