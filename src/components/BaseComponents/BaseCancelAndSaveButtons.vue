@@ -8,16 +8,19 @@ const { handleOnCancel, handleOnSave, isSaveDisabled } = defineProps({
 });
 </script>
 <template>
-  <BaseButton label="Cancel" color="white" @click="handleOnCancel" />
-  <BaseButton
-    label="Save"
-    :class="[
-      'ml-2',
-      {
-        ['cursor-not-allowed hover:bg-slate-700']: isSaveDisabled,
-      },
-    ]"
-    @click="handleOnSave"
-    :disabled="isSaveDisabled"
-  />
+  <div class="place-self-end">
+    <BaseButton color="white" @click="handleOnCancel">Cancel</BaseButton>
+    <BaseButton
+      :class="[
+        'ml-2',
+        {
+          ['cursor-not-allowed hover:bg-slate-700']: isSaveDisabled,
+        },
+      ]"
+      @click="handleOnSave"
+      :disabled="isSaveDisabled"
+    >
+      Save
+    </BaseButton>
+  </div>
 </template>

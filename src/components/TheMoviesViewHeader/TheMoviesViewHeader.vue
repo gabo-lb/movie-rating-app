@@ -15,10 +15,12 @@ const { handleIsBgBlured, handleClearRatings, blurStyle } =
     <TheMoviesViewAverageRating />
   </div>
   <div class="flex space-x-2">
-    <BaseButton label="Clear ratings" @click="handleClearRatings" />
+    <BaseButton @on-click="handleClearRatings" :class="blurStyle">
+      Clear ratings
+    </BaseButton>
     <MovieModal
+      title="Add movie"
       :handle-is-modal-open-change="handleIsBgBlured"
-      button-label="Add Movie"
     />
   </div>
 </template>

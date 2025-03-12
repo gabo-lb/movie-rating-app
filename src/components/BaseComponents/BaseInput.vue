@@ -26,7 +26,6 @@ const handleInputChange = (event) => {
     <label class="text-sm">{{ fieldName }}</label>
   </div>
   <div v-if="fieldType === 'textarea'" class="relative bg-inherit">
-    {{ isResizing }}
     <textarea
       class="base-input-border-styles w-full text-sm min-h-8 max-h-24 bg-transparent outline-none pt-2 pl-2"
       :value="modelValue"

@@ -26,10 +26,12 @@ provide("TheMoviesViewEditModalContext", { handleOpenEditMovieModal });
 </script>
 <template>
   <MovieModal
+    title="Edit Movie"
     :init-data="initEditData"
     :is-init-modal-open="Boolean(initEditData)"
     :handle-save-modal="handleSaveEditMovieData"
     :handle-cancel-modal="handleCancelEditMovieData"
+    is-custom-open-button
   />
   <slot />
 </template>
