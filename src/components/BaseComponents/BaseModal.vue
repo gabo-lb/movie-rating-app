@@ -7,11 +7,11 @@ defineProps({
 });
 </script>
 <template>
-  <div @click="handleCloseModal">
-    <div
-      role="dialog"
-      class="fixed inset-0 flex items-center justify-center z-40"
-    >
+  <div
+    @click="handleCloseModal"
+    class="fixed inset-0 flex items-center justify-center z-40"
+  >
+    <div role="dialog">
       <div class="flex flex-col w-[34rem] h-[30rem] bg-slate-200 shadow-2xl">
         <!-- Modal Header -->
         <div class="flex justify-between p-2">

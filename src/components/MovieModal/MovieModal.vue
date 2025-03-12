@@ -8,7 +8,6 @@ const MovieModalForm = defineAsyncComponent(
 );
 
 const { addNewMovie, updateMovieList } = inject("MoviesViewContext", {});
-const { movieIndex } = inject("MovieItemContext", {});
 
 const { title, initData } = defineProps({
   title: { type: String, default: null },
@@ -64,7 +63,10 @@ const handleOnSave = () => {
     dataToParse: movieData.value,
   });
   if (isEditMode.value) {
-    updateMovieList({ movieIndex, newMovieValue: parsedMovieData });
+    updateMovieList({
+      movieIndex: movieData.value.movieIndex,
+      newMovieValue: parsedMovieData,
+    });
   } else {
     addNewMovie({ movieData: parsedMovieData });
   }
@@ -73,7 +75,8 @@ const handleOnSave = () => {
 
 watchEffect(() => {
   if (initData) {
-    const { name, description, image, genres, inTheaters, rating } = initData;
+    const { name, description, image, genres, inTheaters, rating, movieIndex } =
+      initData;
     movieData.value = {
       name: { hasError: false, value: name },
       description: { hasError: false, value: description },
@@ -81,6 +84,7 @@ watchEffect(() => {
       genres: { hasError: false, value: genres },
       rating: { hasError: false, value: rating },
       inTheaters: { hasError: false, value: inTheaters },
+      movieIndex,
     };
   }
 });

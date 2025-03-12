@@ -1,12 +1,18 @@
 <script setup>
 //External imports
-import { provide, ref } from "vue";
+import { defineAsyncComponent, provide, ref } from "vue";
 //Local imports
 import { items } from "../mockData/movies.json";
 import MovieList from "../components/MovieList/MovieList.vue";
 import TheMoviesViewHeader from "../components/TheMoviesViewHeader/TheMoviesViewHeader.vue";
 
+const MovieModal = defineAsyncComponent(
+  () => import("../components/MovieModal/MovieModal.vue"),
+);
+
 const movieList = ref(items);
+const editMovieData = ref(null);
+const isMovieModalOpen = ref(false);
 
 const addNewMovie = ({ movieData }) => {
   movieList.value.push(movieData);
@@ -32,18 +38,68 @@ const handleClearRatings = () => {
   movieList.value = updatedMovieList;
 };
 
+const handleOpenMovieModal = (movieData) => {
+  if (movieData) {
+    editMovieData.value = movieData;
+  }
+  isMovieModalOpen.value = true;
+};
+
+const handleCloseMovieModal = () => {
+  editMovieData.value = null;
+  isMovieModalOpen.value = false;
+};
+
 provide("MoviesViewContext", {
   movieList,
   updateMovieList,
   handleClearRatings,
   addNewMovie,
   deleteMovie,
+  handleOpenMovieModal,
 });
 </script>
 
 <template>
   <div class="flex flex-col">
-    <TheMoviesViewHeader />
-    <MovieList />
+    <div
+      :class="[
+        'transition-all duration-500 ease-in-out',
+        { ['blur-md']: isMovieModalOpen },
+      ]"
+    >
+      <TheMoviesViewHeader @open-add-movie="handleOpenMovieModal" />
+      <MovieList />
+    </div>
+    <Transition>
+      <MovieModal
+        v-if="isMovieModalOpen"
+        title="Add movie"
+        :init-data="editMovieData"
+        @close="handleCloseMovieModal"
+      />
+    </Transition>
   </div>
 </template>
+
+<style scoped>
+.v-enter-active,
+.v-leave-active,
+.v-enter-active,
+.v-leave-active {
+  transition: all 0.5s ease;
+}
+.v-leave-active {
+  transition: all 0.5s ease;
+}
+
+.v-enter-from,
+.v-leave-to {
+  opacity: 0;
+}
+
+.v-enter-from,
+.v-leave-to {
+  transform: translateY(-50px);
+}
+</style>
