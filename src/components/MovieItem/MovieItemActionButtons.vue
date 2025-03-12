@@ -1,7 +1,6 @@
 <script setup>
 import { defineAsyncComponent, inject, ref } from "vue";
-import editIcon from "../../assets/edit-icon.svg";
-import trashIcon from "../../assets/trash-icon.svg";
+import { PencilIcon, TrashIcon } from "@heroicons/vue/24/solid";
 
 const MovieModal = defineAsyncComponent(
   () => import("../MovieModal/MovieModal.vue"),
@@ -43,13 +42,13 @@ const buttonStyle = "bg-slate-400 p-2 rounded-3xl";
       @close="handleCloseEditMovieModal"
     />
     <button :class="buttonStyle" @click="handleEditMovie">
-      <img :src="editIcon" class="size-3" />
+      <PencilIcon class="size-3" />
     </button>
     <button
       :class="['ml-1', 'hover:bg-red-600', buttonStyle]"
       @click="handleDeleteMovie"
     >
-      <img :src="trashIcon" class="size-3" />
+      <TrashIcon class="size-3" />
     </button>
   </div>
 </template>

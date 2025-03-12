@@ -36,12 +36,10 @@ const isEditMode = ref(Boolean(initData));
 
 const emit = defineEmits(["close"]);
 
-const handleCloseModal = (event) => {
-  if (event === undefined || event?.target?.role === "dialog") {
-    isModalOpen.value = false;
-    movieData.value = getInitMovieData();
-    emit("close");
-  }
+const handleCloseModal = () => {
+  isModalOpen.value = false;
+  movieData.value = getInitMovieData();
+  emit("close");
 };
 
 const getParsedMovieData = ({ dataToParse }) => {
