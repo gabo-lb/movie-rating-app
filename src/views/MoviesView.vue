@@ -4,7 +4,6 @@ import { computed, provide, ref } from "vue";
 //Local imports
 import { items } from "../mockData/movies.json";
 import MovieList from "../components/MovieList/MovieList.vue";
-import MovieModal from "../components/MovieModal/MovieModal.vue";
 import TheMoviesViewHeader from "../components/TheMoviesViewHeader/TheMoviesViewHeader.vue";
 import TheMoviesViewEditModal from "../components/TheMoviesViewHeader/TheMoviesViewEditModal.vue";
 
@@ -31,6 +30,14 @@ const handleIsBgBlured = (isBlured) => {
   isBgBlured.value = isBlured;
 };
 
+const handleClearRatings = () => {
+  const updatedMovieList = movieList.value.map((movie) => ({
+    ...movie,
+    rating: null,
+  }));
+  movieList.value = updatedMovieList;
+};
+
 const blurStyle = computed(() =>
   isBgBlured.value ? "duration-75 ease-in-out blur-sm" : "",
 );
@@ -39,6 +46,7 @@ provide("MoviesViewContext", {
   movieList,
   updateMovieList,
   handleIsBgBlured,
+  handleClearRatings,
   addNewMovie,
   deleteMovie,
   blurStyle,

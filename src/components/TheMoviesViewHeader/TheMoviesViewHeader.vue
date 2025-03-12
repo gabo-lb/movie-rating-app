@@ -3,8 +3,10 @@ import { inject } from "vue";
 import MovieModal from "../MovieModal/MovieModal.vue";
 import TheMoviesViewAverageRating from "./TheMoviesViewAverageRating.vue";
 import TheMoviesViewTotalCounter from "./TheMoviesViewTotalCounter.vue";
+import BaseButton from "../BaseComponents/BaseButton.vue";
 
-const { handleIsBgBlured, blurStyle } = inject("MoviesViewContext");
+const { handleIsBgBlured, handleClearRatings, blurStyle } =
+  inject("MoviesViewContext");
 </script>
 <template>
   <div :class="['flex flex-nowrap text-slate-200 mr-4', blurStyle]">
@@ -12,8 +14,11 @@ const { handleIsBgBlured, blurStyle } = inject("MoviesViewContext");
     <div class="mr-6">/</div>
     <TheMoviesViewAverageRating />
   </div>
-  <MovieModal
-    :handle-is-modal-open-change="handleIsBgBlured"
-    button-label="Add Movie"
-  />
+  <div class="flex space-x-2">
+    <BaseButton label="Clear ratings" @click="handleClearRatings" />
+    <MovieModal
+      :handle-is-modal-open-change="handleIsBgBlured"
+      button-label="Add Movie"
+    />
+  </div>
 </template>
