@@ -6,7 +6,7 @@ const { movieList, updateMovieList } = inject("MoviesViewContext");
 const { movieIndex } = inject("MovieItemContext");
 
 const movieRating = computed(() => {
-  const { rating } = movieList.value[movieIndex].rating;
+  const { rating } = movieList.value[movieIndex];
   return rating || "-";
 });
 

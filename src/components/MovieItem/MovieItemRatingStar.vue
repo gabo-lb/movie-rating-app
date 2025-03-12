@@ -1,6 +1,6 @@
 <script setup>
 import { StarIcon } from "@heroicons/vue/24/solid";
-import { inject, ref, watchEffect } from "vue";
+import { computed, inject, ref, watchEffect } from "vue";
 
 const { isFilledStar, starSize } = defineProps({
   isFilledStar: { type: Boolean, default: false },
@@ -10,11 +10,12 @@ const { isFilledStar, starSize } = defineProps({
 const { movieList } = inject("MoviesViewContext");
 const { movieIndex } = inject("MovieItemContext");
 
-const movieRating = ref();
-
-watchEffect(() => {
-  movieRating.value = movieList.value[movieIndex].rating || "-";
+const movieRating = computed(() => {
+  const { rating } = movieList.value[movieIndex];
+  return rating || "-";
 });
+
+watchEffect(() => {});
 </script>
 <template>
   <div class="relative">
