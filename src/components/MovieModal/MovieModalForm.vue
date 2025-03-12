@@ -1,8 +1,7 @@
 <script setup>
-import { computed, inject, ref, watchEffect } from "vue";
+import { ref } from "vue";
 import BaseInput from "../BaseComponents/BaseInput.vue";
 import BaseSelect from "../BaseComponents/BaseSelect.vue";
-import BaseCancelAndSaveButtons from "../BaseComponents/BaseCancelAndSaveButtons.vue";
 import { genres as movieGenres } from "../../mockData/genres.json";
 
 const props = defineProps({
@@ -10,19 +9,6 @@ const props = defineProps({
 });
 
 const movieData = ref(props.modelValue);
-
-// watchEffect(() => {
-//   if (props.initData) {
-//     let parsedInitData = {};
-//     Object.entries(props.initData).forEach(([fieldKey, fieldValue]) => {
-//       parsedInitData = {
-//         ...parsedInitData,
-//         [fieldKey]: { hasError: false, value: fieldValue },
-//       };
-//     });
-//     movieData.value = parsedInitData;
-//   }
-// });
 </script>
 <template>
   <div class="grid w-[34rem] bg-slate-200 shadow-2xl p-6">
@@ -49,11 +35,5 @@ const movieData = ref(props.modelValue);
         field-type="checkbox"
       />
     </div>
-
-    <!-- <BaseCancelAndSaveButtons
-      :handle-on-cancel="handleOnCancel"
-      :handle-on-save="handleOnSave"
-      :is-save-disabled="isSaveDisabled"
-    /> -->
   </div>
 </template>

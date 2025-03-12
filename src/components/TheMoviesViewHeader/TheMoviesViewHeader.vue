@@ -1,12 +1,27 @@
 <script setup>
-import { inject } from "vue";
-import MovieModal from "../MovieModal/MovieModal.vue";
+import { defineAsyncComponent, inject, ref } from "vue";
 import TheMoviesViewAverageRating from "./TheMoviesViewAverageRating.vue";
 import TheMoviesViewTotalCounter from "./TheMoviesViewTotalCounter.vue";
 import BaseButton from "../BaseComponents/BaseButton.vue";
 
+const MovieModal = defineAsyncComponent(
+  () => import("../MovieModal/MovieModal.vue"),
+);
+
 const { handleIsBgBlured, handleClearRatings, blurStyle } =
   inject("MoviesViewContext");
+
+const isAddMovieModalOpen = ref(false);
+
+const handleOpenMovieModal = () => {
+  isAddMovieModalOpen.value = true;
+  handleIsBgBlured(true);
+};
+
+const handleCloseMovieModal = () => {
+  isAddMovieModalOpen.value = false;
+  handleIsBgBlured(false);
+};
 </script>
 <template>
   <div :class="['flex flex-nowrap text-slate-200 mr-4', blurStyle]">
@@ -16,11 +31,15 @@ const { handleIsBgBlured, handleClearRatings, blurStyle } =
   </div>
   <div class="flex space-x-2">
     <BaseButton @on-click="handleClearRatings" :class="blurStyle">
-      Clear ratings
+      Clear Ratings
+    </BaseButton>
+    <BaseButton @on-click="handleOpenMovieModal" :class="blurStyle">
+      Add Movie
     </BaseButton>
     <MovieModal
+      v-if="isAddMovieModalOpen"
       title="Add movie"
-      :handle-is-modal-open-change="handleIsBgBlured"
+      @close="handleCloseMovieModal"
     />
   </div>
 </template>

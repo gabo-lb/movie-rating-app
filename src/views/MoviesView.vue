@@ -5,7 +5,6 @@ import { computed, provide, ref } from "vue";
 import { items } from "../mockData/movies.json";
 import MovieList from "../components/MovieList/MovieList.vue";
 import TheMoviesViewHeader from "../components/TheMoviesViewHeader/TheMoviesViewHeader.vue";
-import TheMoviesViewEditModal from "../components/TheMoviesViewHeader/TheMoviesViewEditModal.vue";
 
 const movieList = ref(items);
 const isBgBlured = ref(false);
@@ -58,8 +57,6 @@ provide("MoviesViewContext", {
     <div class="flex flex-nowrap mx-[170px] my-6 justify-between text-2xl">
       <TheMoviesViewHeader />
     </div>
-    <TheMoviesViewEditModal>
-      <MovieList :class="blurStyle" />
-    </TheMoviesViewEditModal>
+    <MovieList :class="blurStyle" />
   </div>
 </template>

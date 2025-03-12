@@ -1,29 +1,23 @@
 <script setup>
-import { computed, inject, onMounted, ref, watchEffect } from "vue";
-import MovieModalForm from "./MovieModalForm.vue";
-import BaseButton from "../BaseComponents/BaseButton.vue";
+import { computed, defineAsyncComponent, inject, ref, watchEffect } from "vue";
 import BaseModal from "../BaseComponents/BaseModal.vue";
 import BaseCancelAndSaveButtons from "../BaseComponents/BaseCancelAndSaveButtons.vue";
 
-const { addNewMovie, blurStyle } = inject("MoviesViewContext", {});
+const MovieModalForm = defineAsyncComponent(
+  () => import("./MovieModalForm.vue"),
+);
+
+const { addNewMovie, updateMovieList, blurStyle } = inject(
+  "MoviesViewContext",
+  {},
+);
+const { movieIndex } = inject("MovieItemContext", {});
 
 const isModalOpen = ref(false);
 
-const {
-  title,
-  initData,
-  isInitModalOpen,
-  handleSaveModal,
-  handleCancelModal,
-  handleIsModalOpenChange,
-} = defineProps({
+const { title, initData } = defineProps({
   title: { type: String, default: null },
   initData: { type: Object, default: null },
-  isInitModalOpen: { type: Boolean, default: false },
-  isCustomOpenButton: { type: Boolean, default: false },
-  handleSaveModal: { type: Function, default: () => null },
-  handleCancelModal: { type: Function, default: () => null },
-  handleIsModalOpenChange: { type: Function, default: () => null },
 });
 
 const getInitMovieData = () => ({
@@ -36,38 +30,18 @@ const getInitMovieData = () => ({
 
 const movieData = ref(getInitMovieData());
 
-watchEffect(() => {
-  if (initData) {
-    const { name, description, image, genres, inTheaters, rating } = initData;
-    movieData.value = {
-      name: { hasError: false, value: name },
-      description: { hasError: false, value: description },
-      image: { hasError: false, value: image },
-      genres: { hasError: false, value: genres },
-      rating: { hasError: false, value: rating },
-      inTheaters: { hasError: false, value: inTheaters },
-    };
-  }
-});
-
 const requiredFields = ref(["name"]);
 
 const isEditMode = ref(Boolean(initData));
 
-const handleOpenModal = () => {
-  isModalOpen.value = true;
-};
+const emit = defineEmits(["close"]);
 
 const handleCloseModal = (event) => {
   if (event === undefined || event?.target?.role === "dialog") {
     isModalOpen.value = false;
-    handleCancelModal?.();
     movieData.value = getInitMovieData();
+    emit("close");
   }
-};
-
-const handleOnCancel = () => {
-  handleCloseModal();
 };
 
 const getParsedMovieData = ({ dataToParse }) => {
@@ -93,40 +67,40 @@ const isSaveDisabled = computed(() => {
 });
 
 const handleOnSave = () => {
-  if (!isSaveDisabled.value) {
-    const parsedMovieData = getParsedMovieData({
-      dataToParse: movieData.value,
-    });
-    if (!isEditMode.value) {
-      addNewMovie({ movieData: parsedMovieData });
-    }
-    handleSaveModal?.({ editedMovieData: parsedMovieData });
-    handleCloseModal();
+  if (isSaveDisabled.value) return;
+  const parsedMovieData = getParsedMovieData({
+    dataToParse: movieData.value,
+  });
+  if (isEditMode.value) {
+    updateMovieList({ movieIndex, newMovieValue: parsedMovieData });
+  } else {
+    addNewMovie({ movieData: parsedMovieData });
   }
-  x;
+  handleCloseModal();
 };
 
 watchEffect(() => {
-  isModalOpen.value = isInitModalOpen;
-});
-
-watchEffect(() => {
-  handleIsModalOpenChange?.(isModalOpen.value);
+  if (initData) {
+    const { name, description, image, genres, inTheaters, rating } = initData;
+    movieData.value = {
+      name: { hasError: false, value: name },
+      description: { hasError: false, value: description },
+      image: { hasError: false, value: image },
+      genres: { hasError: false, value: genres },
+      rating: { hasError: false, value: rating },
+      inTheaters: { hasError: false, value: inTheaters },
+    };
+  }
 });
 </script>
 <template>
-  <div v-if="!isCustomOpenButton">
-    <BaseButton @on-click="handleOpenModal" :class="blurStyle">
-      {{ title }}
-    </BaseButton>
-  </div>
-  <BaseModal :title v-if="isModalOpen" @close="handleCloseModal">
+  <BaseModal :title @close="handleCloseModal">
     <template #body>
       <MovieModalForm v-model="movieData" />
     </template>
     <template #footer>
       <BaseCancelAndSaveButtons
-        :handle-on-cancel="handleOnCancel"
+        :handle-on-cancel="handleCloseModal"
         :handle-on-save="handleOnSave"
         :is-save-disabled="isSaveDisabled"
       />
