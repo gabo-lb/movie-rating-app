@@ -18,6 +18,7 @@ const { movieList } = inject("MoviesViewContext");
 </template>
 
 <style scoped>
+.v-move,
 .v-enter-active,
 .v-leave-active {
   transition: all 0.5s ease;
