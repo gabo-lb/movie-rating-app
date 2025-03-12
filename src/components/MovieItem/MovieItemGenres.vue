@@ -1,13 +1,12 @@
 <script setup>
-import { inject, ref, watchEffect } from "vue";
+import { computed, inject } from "vue";
 
 const { movieList } = inject("MoviesViewContext");
 const { movieIndex } = inject("MovieItemContext");
-const movieGenres = ref([]);
 
-watchEffect(() => {
+const movieGenres = computed(() => {
   const { genres } = movieList.value[movieIndex] ?? {};
-  movieGenres.value = genres || "";
+  return genres || "";
 });
 </script>
 <template>

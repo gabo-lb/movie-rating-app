@@ -1,10 +1,8 @@
 <script setup>
-import { inject, watchEffect } from "vue";
+import { inject } from "vue";
 import MovieItem from "../MovieItem/MovieItem.vue";
 
 const { movieList } = inject("MoviesViewContext");
-
-watchEffect(() => movieList.value);
 </script>
 
 <template>

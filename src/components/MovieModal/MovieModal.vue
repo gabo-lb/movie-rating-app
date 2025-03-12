@@ -7,13 +7,8 @@ const MovieModalForm = defineAsyncComponent(
   () => import("./MovieModalForm.vue"),
 );
 
-const { addNewMovie, updateMovieList, blurStyle } = inject(
-  "MoviesViewContext",
-  {},
-);
+const { addNewMovie, updateMovieList } = inject("MoviesViewContext", {});
 const { movieIndex } = inject("MovieItemContext", {});
-
-const isModalOpen = ref(false);
 
 const { title, initData } = defineProps({
   title: { type: String, default: null },
@@ -37,7 +32,6 @@ const isEditMode = ref(Boolean(initData));
 const emit = defineEmits(["close"]);
 
 const handleCloseModal = () => {
-  isModalOpen.value = false;
   movieData.value = getInitMovieData();
   emit("close");
 };

@@ -1,10 +1,14 @@
 <script setup>
-import { inject, ref, watchEffect } from "vue";
+import { computed, inject } from "vue";
 import MovieItemRatingStar from "./MovieItemRatingStar.vue";
 
 const { movieList, updateMovieList } = inject("MoviesViewContext");
 const { movieIndex } = inject("MovieItemContext");
-const movieRating = ref();
+
+const movieRating = computed(() => {
+  const { rating } = movieList.value[movieIndex].rating;
+  return rating || "-";
+});
 
 const updateRating = (newRating) => {
   updateMovieList({
@@ -13,10 +17,6 @@ const updateRating = (newRating) => {
     movieKeyValue: "rating",
   });
 };
-
-watchEffect(() => {
-  movieRating.value = movieList.value[movieIndex].rating || "-";
-});
 </script>
 <template>
   <div class="flex text-sm">

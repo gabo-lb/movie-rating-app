@@ -1,8 +1,9 @@
 <script setup>
 import { defineAsyncComponent, inject, ref } from "vue";
 import { PencilIcon, TrashIcon } from "@heroicons/vue/24/solid";
+import BaseButton from "../BaseComponents/BaseButton.vue";
 
-const MovieModal = defineAsyncComponent(
+const EditMovieModal = defineAsyncComponent(
   () => import("../MovieModal/MovieModal.vue"),
 );
 
@@ -35,20 +36,25 @@ const buttonStyle = "bg-slate-400 p-2 rounded-3xl";
 </script>
 <template>
   <div class="flex" v-if="isShowActionBtns">
-    <MovieModal
+    <EditMovieModal
       v-if="isEditMovieModalOpen"
       title="Edit Movie"
       :init-data="initMovieData"
       @close="handleCloseEditMovieModal"
     />
-    <button :class="buttonStyle" @click="handleEditMovie">
+    <BaseButton
+      @on-click="handleEditMovie"
+      :class="buttonStyle"
+      is-custom-child
+    >
       <PencilIcon class="size-3" />
-    </button>
-    <button
+    </BaseButton>
+    <BaseButton
+      @on-click="handleDeleteMovie"
       :class="['ml-1', 'hover:bg-red-600', buttonStyle]"
-      @click="handleDeleteMovie"
+      is-custom-child
     >
       <TrashIcon class="size-3" />
-    </button>
+    </BaseButton>
   </div>
 </template>
