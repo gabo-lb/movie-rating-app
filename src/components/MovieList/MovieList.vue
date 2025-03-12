@@ -25,6 +25,6 @@ const { movieList } = inject("MoviesViewContext");
 .v-enter-from,
 .v-leave-to {
   opacity: 0;
-  transform: translateX(30px);
+  scale: 10%;
 }
 </style>
