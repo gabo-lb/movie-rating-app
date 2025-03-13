@@ -36,7 +36,8 @@ const handleCloseModal = () => {
 };
 
 const getParsedMovieData = ({ dataToParse }) => {
-  const { name, description, image, genres, inTheaters, rating } = dataToParse;
+  const { name, description, image, genres, inTheaters, rating, id } =
+    dataToParse;
   return {
     name: name.value,
     description: description.value,
@@ -44,6 +45,7 @@ const getParsedMovieData = ({ dataToParse }) => {
     genres: genres.value,
     inTheaters: inTheaters.value,
     rating: rating?.value || "-",
+    id,
   };
 };
 
@@ -75,8 +77,16 @@ const handleOnSave = () => {
 
 watchEffect(() => {
   if (initData) {
-    const { name, description, image, genres, inTheaters, rating, movieIndex } =
-      initData;
+    const {
+      name,
+      description,
+      image,
+      genres,
+      inTheaters,
+      rating,
+      movieIndex,
+      id,
+    } = initData;
     movieData.value = {
       name: { hasError: false, value: name },
       description: { hasError: false, value: description },
@@ -85,6 +95,7 @@ watchEffect(() => {
       rating: { hasError: false, value: rating },
       inTheaters: { hasError: false, value: inTheaters },
       movieIndex,
+      id,
     };
   }
 });

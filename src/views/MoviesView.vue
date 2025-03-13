@@ -1,8 +1,7 @@
 <script setup>
 //External imports
-import { defineAsyncComponent, provide, ref } from "vue";
+import { defineAsyncComponent, inject, provide, ref } from "vue";
 //Local imports
-import { items } from "../mockData/movies.json";
 import MovieList from "../components/MovieList/MovieList.vue";
 import TheMoviesViewHeader from "../components/TheMoviesViewHeader/TheMoviesViewHeader.vue";
 
@@ -10,7 +9,8 @@ const MovieModal = defineAsyncComponent(
   () => import("../components/MovieModal/MovieModal.vue"),
 );
 
-const movieList = ref(items);
+const { movieList } = inject("AppContext");
+
 const editMovieData = ref(null);
 const isMovieModalOpen = ref(false);
 

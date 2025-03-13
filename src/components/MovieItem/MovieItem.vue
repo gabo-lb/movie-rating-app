@@ -1,5 +1,5 @@
 <script setup>
-import { provide, ref } from "vue";
+import { computed, inject, provide, ref } from "vue";
 import MovieItemName from "./MovieItemName.vue";
 import MovieItemImage from "./MovieItemImage.vue";
 import MovieItemGenres from "./MovieItemGenres.vue";
@@ -7,9 +7,13 @@ import MovieItemDescription from "./MovieItemDescription.vue";
 import MovieItemRating from "./MovieItemRating.vue";
 import MovieItemActionButtons from "./MovieItemActionButtons.vue";
 
+const { movieList } = inject("MoviesViewContext", {});
+
 const { movieIndex } = defineProps({
   movieIndex: Number,
 });
+
+const movieData = computed(() => movieList?.value?.[movieIndex]);
 
 const isMouseOverMovieCard = ref(false);
 
@@ -29,15 +33,17 @@ provide("MovieItemContext", { movieIndex });
     @mouseenter="handleMouseEnter"
     @mouseleave="handleMouseLeave"
   >
-    <MovieItemImage />
+    <div class="h-[34rem] overflow-y-hidden rounded-t-md">
+      <MovieItemImage :movie-data="movieData" />
+    </div>
     <div className="relative p-4 h-[14rem] ">
-      <MovieItemName />
-      <MovieItemGenres />
-      <MovieItemDescription />
+      <MovieItemName :movie-data="movieData" />
+      <MovieItemGenres :movie-data="movieData" />
+      <MovieItemDescription :movie-data="movieData" />
       <div
         class="absolute flex flex-nowrap bottom-0 justify-between w-full mb-3"
       >
-        <MovieItemRating />
+        <MovieItemRating :movie-data="movieData" />
         <MovieItemActionButtons
           class="absolute right-8"
           :is-show-action-btns="isMouseOverMovieCard"

@@ -1,7 +1,10 @@
 <script setup>
 import { inject } from "vue";
-import { PencilIcon, TrashIcon } from "@heroicons/vue/24/solid";
+import { PencilIcon, TrashIcon, EyeIcon } from "@heroicons/vue/24/solid";
 import BaseButton from "../BaseComponents/BaseButton.vue";
+import { useRouter } from "vue-router";
+
+const router = useRouter();
 
 const { deleteMovie, movieList, handleOpenMovieModal } =
   inject("MoviesViewContext");
@@ -18,6 +21,12 @@ const handleDeleteMovie = () => {
 const handleEditMovie = () => {
   const movieDataToEdit = { ...movieList?.value?.[movieIndex], movieIndex };
   handleOpenMovieModal({ ...movieDataToEdit, movieIndex });
+};
+
+const handleRedirectDetailMovie = () => {
+  const movieId = movieList.value[movieIndex].id;
+  console.log("AAA: ", { movieId, movieIndex });
+  router.push({ name: "movieDetail", params: { movieId } });
 };
 
 const buttonStyle = "bg-slate-400 p-2 rounded-3xl";
@@ -37,6 +46,14 @@ const buttonStyle = "bg-slate-400 p-2 rounded-3xl";
       is-custom-child
     >
       <TrashIcon class="size-3" />
+    </BaseButton>
+
+    <BaseButton
+      @on-click="handleRedirectDetailMovie"
+      :class="['ml-1', 'hover:bg-red-600', buttonStyle]"
+      is-custom-child
+    >
+      <EyeIcon class="size-3" />
     </BaseButton>
   </div>
 </template>

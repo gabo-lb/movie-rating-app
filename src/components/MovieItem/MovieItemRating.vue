@@ -2,16 +2,20 @@
 import { computed, inject } from "vue";
 import MovieItemRatingStar from "./MovieItemRatingStar.vue";
 
-const { movieList, updateMovieList } = inject("MoviesViewContext");
-const { movieIndex } = inject("MovieItemContext");
+const { movieIndex } = inject("MovieItemContext", {});
+const { updateMovieList } = inject("MoviesViewContext", {});
+
+const { movieData } = defineProps({
+  movieData: { type: Object, default: null },
+});
 
 const movieRating = computed(() => {
-  const { rating } = movieList.value[movieIndex];
+  const { rating } = movieData ?? {};
   return rating || "-";
 });
 
 const updateRating = (newRating) => {
-  updateMovieList({
+  updateMovieList?.({
     movieIndex: movieIndex,
     newMovieValue: newRating,
     movieKeyValue: "rating",

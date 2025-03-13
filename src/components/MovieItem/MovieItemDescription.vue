@@ -1,11 +1,12 @@
 <script setup>
-import { computed, inject } from "vue";
+import { computed } from "vue";
 
-const { movieList } = inject("MoviesViewContext");
-const { movieIndex } = inject("MovieItemContext");
+const { movieData } = defineProps({
+  movieData: { type: Object, default: null },
+});
 
 const movieDescription = computed(() => {
-  const { description } = movieList.value[movieIndex] ?? {};
+  const { description } = movieData ?? {};
   return description || "";
 });
 </script>
