@@ -1,7 +1,7 @@
 <script setup>
-import { inject } from "vue";
+import { useMovieList } from "../../composables/useMovieList";
 
-const { movieList } = inject("MoviesViewContext");
+const { movieList } = useMovieList();
 </script>
 <template>
   <div class="text-nowrap mr-6">Total movies: {{ movieList.length }}</div>

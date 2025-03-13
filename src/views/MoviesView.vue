@@ -1,6 +1,6 @@
 <script setup>
 //External imports
-import { defineAsyncComponent, inject, provide, ref } from "vue";
+import { defineAsyncComponent, provide, ref } from "vue";
 //Local imports
 import MovieList from "../components/MovieList/MovieList.vue";
 import TheMoviesViewHeader from "../components/TheMoviesViewHeader/TheMoviesViewHeader.vue";
@@ -9,34 +9,8 @@ const MovieModal = defineAsyncComponent(
   () => import("../components/MovieModal/MovieModal.vue"),
 );
 
-const { movieList } = inject("AppContext");
-
 const editMovieData = ref(null);
 const isMovieModalOpen = ref(false);
-
-const addNewMovie = ({ movieData }) => {
-  movieList.value.push(movieData);
-};
-
-const updateMovieList = ({ movieIndex, newMovieValue, movieKeyValue }) => {
-  if (movieKeyValue) {
-    movieList.value[movieIndex][movieKeyValue] = newMovieValue;
-    return;
-  }
-  movieList.value[movieIndex] = newMovieValue;
-};
-
-const deleteMovie = ({ movieIndex }) => {
-  movieList.value.splice(movieIndex, 1);
-};
-
-const handleClearRatings = () => {
-  const updatedMovieList = movieList.value.map((movie) => ({
-    ...movie,
-    rating: null,
-  }));
-  movieList.value = updatedMovieList;
-};
 
 const handleOpenMovieModal = (movieData) => {
   if (movieData) {
@@ -51,11 +25,6 @@ const handleCloseMovieModal = () => {
 };
 
 provide("MoviesViewContext", {
-  movieList,
-  updateMovieList,
-  handleClearRatings,
-  addNewMovie,
-  deleteMovie,
   handleOpenMovieModal,
 });
 </script>

@@ -1,9 +1,10 @@
 <script setup>
 import { computed, inject } from "vue";
 import MovieItemRatingStar from "./MovieItemRatingStar.vue";
+import { useMovieList } from "../../composables/useMovieList";
 
 const { movieIndex } = inject("MovieItemContext", {});
-const { updateMovieList } = inject("MoviesViewContext", {});
+const { handleUpdateMovieList } = useMovieList();
 
 const { movieData } = defineProps({
   movieData: { type: Object, default: null },
@@ -15,7 +16,7 @@ const movieRating = computed(() => {
 });
 
 const updateRating = (newRating) => {
-  updateMovieList?.({
+  handleUpdateMovieList?.({
     movieIndex: movieIndex,
     newMovieValue: newRating,
     movieKeyValue: "rating",

@@ -1,10 +1,10 @@
 <script setup>
-import { inject } from "vue";
 import TheMoviesViewAverageRating from "./TheMoviesViewAverageRating.vue";
 import TheMoviesViewTotalCounter from "./TheMoviesViewTotalCounter.vue";
 import BaseButton from "../BaseComponents/BaseButton.vue";
+import { useMovieList } from "../../composables/useMovieList";
 
-const { handleClearRatings } = inject("MoviesViewContext");
+const { handleClearRatings } = useMovieList();
 </script>
 <template>
   <div class="flex flex-nowrap mx-[170px] my-6 justify-between text-2xl">

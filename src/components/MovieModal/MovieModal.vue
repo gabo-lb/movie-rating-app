@@ -1,13 +1,14 @@
 <script setup>
-import { computed, defineAsyncComponent, inject, ref, watchEffect } from "vue";
+import { computed, defineAsyncComponent, ref, watchEffect } from "vue";
 import BaseModal from "../BaseComponents/BaseModal.vue";
 import BaseCancelAndSaveButtons from "../BaseComponents/BaseCancelAndSaveButtons.vue";
+import { useMovieList } from "../../composables/useMovieList";
 
 const MovieModalForm = defineAsyncComponent(
   () => import("./MovieModalForm.vue"),
 );
 
-const { addNewMovie, updateMovieList } = inject("MoviesViewContext", {});
+const { handleAddNewMovie, handleUpdateMovieList } = useMovieList();
 
 const { title, initData } = defineProps({
   title: { type: String, default: null },
@@ -65,12 +66,12 @@ const handleOnSave = () => {
     dataToParse: movieData.value,
   });
   if (isEditMode.value) {
-    updateMovieList({
+    handleUpdateMovieList({
       movieIndex: movieData.value.movieIndex,
       newMovieValue: parsedMovieData,
     });
   } else {
-    addNewMovie({ movieData: parsedMovieData });
+    handleAddNewMovie({ movieData: parsedMovieData });
   }
   handleCloseModal();
 };

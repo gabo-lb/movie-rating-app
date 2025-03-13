@@ -1,13 +1,14 @@
 <script setup>
-import { computed, inject, provide, ref } from "vue";
+import { computed, provide, ref } from "vue";
 import MovieItemName from "./MovieItemName.vue";
 import MovieItemImage from "./MovieItemImage.vue";
 import MovieItemGenres from "./MovieItemGenres.vue";
 import MovieItemDescription from "./MovieItemDescription.vue";
 import MovieItemRating from "./MovieItemRating.vue";
 import MovieItemActionButtons from "./MovieItemActionButtons.vue";
+import { useMovieList } from "../../composables/useMovieList";
 
-const { movieList } = inject("MoviesViewContext", {});
+const { movieList } = useMovieList();
 
 const { movieIndex } = defineProps({
   movieIndex: Number,

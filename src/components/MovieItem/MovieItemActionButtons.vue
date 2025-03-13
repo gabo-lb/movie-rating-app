@@ -3,20 +3,18 @@ import { inject } from "vue";
 import { PencilIcon, TrashIcon, EyeIcon } from "@heroicons/vue/24/solid";
 import BaseButton from "../BaseComponents/BaseButton.vue";
 import { useRouter } from "vue-router";
+import { useMovieList } from "../../composables/useMovieList";
 
 const router = useRouter();
 
-const { deleteMovie, movieList, handleOpenMovieModal } =
-  inject("MoviesViewContext");
+const { handleOpenMovieModal } = inject("MoviesViewContext");
 const { movieIndex } = inject("MovieItemContext");
+
+const { handleDeleteMovie, movieList } = useMovieList();
 
 defineProps({
   isShowActionBtns: Boolean,
 });
-
-const handleDeleteMovie = () => {
-  deleteMovie({ movieIndex });
-};
 
 const handleEditMovie = () => {
   const movieDataToEdit = { ...movieList?.value?.[movieIndex], movieIndex };
@@ -41,7 +39,7 @@ const buttonStyle = "bg-slate-400 p-2 rounded-3xl";
       <PencilIcon class="size-3" />
     </BaseButton>
     <BaseButton
-      @on-click="handleDeleteMovie"
+      @on-click="handleDeleteMovie({ movieIndex })"
       :class="['ml-1', 'hover:bg-red-600', buttonStyle]"
       is-custom-child
     >

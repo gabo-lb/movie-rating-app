@@ -1,8 +1,8 @@
 <script setup>
-import { inject } from "vue";
 import MovieItem from "../MovieItem/MovieItem.vue";
+import { useMovieList } from "../../composables/useMovieList";
 
-const { movieList } = inject("MoviesViewContext");
+const { movieList } = useMovieList();
 </script>
 
 <template>
