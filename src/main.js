@@ -1,10 +1,9 @@
 import { createApp } from "vue";
 import App from "./App.vue";
 import "../style.css";
-
 import { createWebHistory, createRouter } from "vue-router";
 import MoviesView from "./views/MoviesView.vue";
-import MovieDetail from "./components/MovieDetail/MovieDetail.vue";
+import MovieDetail from "./views/MovieDetail.vue";
 import NotFound from "./views/NotFound.vue";
 
 const routes = [

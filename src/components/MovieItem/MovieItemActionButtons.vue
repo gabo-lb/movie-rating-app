@@ -23,7 +23,6 @@ const handleEditMovie = () => {
 
 const handleRedirectDetailMovie = () => {
   const movieId = movieList.value[movieIndex].id;
-  console.log("AAA: ", { movieId, movieIndex });
   router.push({ name: "movieDetail", params: { movieId } });
 };
 
